@@ -5,28 +5,50 @@ import re
 import key
 
 #get an auth key from spotify using client id
-TOKEN_URL = "https://accounts.spotify.com/api/token"
-PARAMS = {'grant_type':'client_credentials'}
+def get_token():
+    TOKEN_URL = "https://accounts.spotify.com/api/token"
+    PARAMS = {'grant_type':'client_credentials'}
+    r = requests.post(url = TOKEN_URL, data = PARAMS, auth = (key.client_id, key.client_secret))
 
-r = requests.post(url = TOKEN_URL, data = PARAMS, auth = (key.client_id, key.client_secret))
-token = 'Bearer ' + r.json()['access_token']
+    #auth token for all subsequent requests
+    token = 'Bearer ' + r.json()['access_token']
+    return token
 
-#get the playlist url
-playlist_url = input("Please enter a public spotify playlist url\n")
-id = re.search("/playlist/([a-zA-Z0-9]*)", playlist_url)
-playlist_id = id.group()[10::]
+def get_playlist_id():
+    #get the playlist url using regex
+    playlist_url = input("Please enter a public spotify playlist url\n")
+    id = re.search("/playlist/([a-zA-Z0-9]*)", playlist_url)
+    playlist_id = id.group()[10::]
+    return playlist_id
 
-URL = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks"
-content = "application/json"
+def get_album_tracks(songs, token, playlist_id, offset=0):
+    #send a request to get all tracks from the playlist
+    URL = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks"
+    content = "application/json"
+    PARAMS = {'Accept':content, 'Content-Type':content, 'Authorization':token} 
+    r = requests.get(url = URL, headers = PARAMS) 
 
-PARAMS = {'Accept':content, 'Content-Type':content, 'Authorization':token} 
-  
-# sending get request and saving the response as response object 
-r = requests.get(url = URL, headers = PARAMS) 
-  
-# extracting data in json format 
-data = r.json() 
+    #payload of the http response
+    data = r.json()
 
-print("Tracks Found:")
-for item in data["items"]:
-    print(">> "+item["track"]["name"])
+    #load into dict
+    for item in data["items"]:
+        songs[item["track"]["name"]] = {"id":item["track"]["id"]}
+        print(">> " + item["track"]["name"])
+
+
+
+def main():
+    #map of songs, key being song-title, value is a map of attributes
+    songs = {}
+
+    token = get_token()
+    playlist_id = get_playlist_id()
+    get_album_tracks(songs, token, playlist_id)
+
+    #if the playlist is over 100 songs, keep track of how many are left
+    #songs_left = int(data["total"]) - len(data["items"])
+
+if __name__ == "__main__":
+    main()
+
