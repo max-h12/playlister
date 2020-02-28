@@ -48,23 +48,42 @@ def get_album_tracks(songs, token, playlist_id):
     #continue to request more songs until we run out
     while(("items" in data) and len(data["items"])>0):
         for item in data["items"]:
-            songs[item["track"]["name"]] = {"id":item["track"]["id"]}
-
+            songs[item["track"]["id"]] = {"name":item["track"]["name"]}
+            
         offset+=100
         r = requests.get(url = URL, headers = PARAMS, params={"offset":str(offset)}) 
         data = r.json()
 
+def get_song_features(songs, attribute_avg, token):
+    #setup the request
+    URL = "https://api.spotify.com/v1/audio-features/"
+    PARAMS = {'Authorization':token} 
+
+    #go through every song
+    for id in songs:
+        #request the attributes for that song
+        r = requests.get(url = URL + id, headers = PARAMS) 
+        data = r.json()
+
+        #add each attribute into the map and add its partial average in
+        for key in attribute_avg:
+            songs[id][key] = data[key]
+            attribute_avg[key] += (data[key]/len(songs))
 
 def main():
     #map of songs, key being song-title, value is a map of attributes
     songs = {}
 
+    #average of all songs in respective categories
+    attribute_avg = {"duration_ms":0, "key":0, "mode":0, "acousticness":0, "danceability":0, "energy":0, "instrumentalness":0, "liveness":0, "loudness":0, "speechiness":0, "valence":0, "tempo":0}
+
+    #get authorization and playlist id from input
     token = get_token()
     playlist_id = get_playlist_id()
 
+    #get the songs, then load in their features
     get_album_tracks(songs, token, playlist_id)
-    print(len(songs))
-
+    get_song_features(songs, attribute_avg, token)
 
 if __name__ == "__main__":
     main()
