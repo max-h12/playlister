@@ -26,8 +26,7 @@ def main():
     request.get_album_tracks(songs, token, playlist_id)
     request.get_song_features(songs, attribute_avg, token)
 
-    print(songs)
-    #io.format_oput(attribute_avg)
+    io.format_oput(attribute_avg)
 
 if __name__ == "__main__":
     main()
