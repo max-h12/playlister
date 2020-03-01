@@ -17,12 +17,15 @@ def get_playlist_id():
     playlist_id = id.group()[10::]
     return playlist_id
 
-#formats the attribute averages for display to user
-def format_oput(attribute_avg):
+#formats the attribute averages and percentiles for display to user in terminal
+def format_oput(attribute_avg, attribute_percentile):
+
     milli = attribute_avg['duration_ms']
     seconds = round(int((milli/1000)%60),2)
     minutes = round(int((milli/(1000*60))%60),2)
     print(f"Average duration: {minutes}:{seconds}")
+    print(f">> This is in the {attribute_percentile['duration_ms']}th percentile")
+
     est_pitch = round(attribute_avg['key'])
     if(PITCH_MAP.__contains__(est_pitch)):
         print(f"Overall key average: {PITCH_MAP[est_pitch]}")
@@ -30,12 +33,31 @@ def format_oput(attribute_avg):
         print("Overall key average: Unknown")
     print(f"Major/Minor Average: More {MODE_MAP[round(attribute_avg['mode'])]}")
     print(f"Average Time Signature (beats per bar/measure): {round(attribute_avg['time_signature'])}")
+
     print(f"Average Acousticness (confidence a track is acoustic)[0.0 - 1.0]: {round(attribute_avg['acousticness'],3)}")
+    print(f">> This is in the {attribute_percentile['acousticness']}th percentile")
+
     print(f"Average Danceability [0.0 - 1.0]: {round(attribute_avg['danceability'],3)}")
+    print(f">> This is in the {attribute_percentile['danceability']}th percentile")
+
     print(f"Average Energy [0.0 - 1.0]: {round(attribute_avg['energy'],3)}")
+    print(f">> This is in the {attribute_percentile['energy']}th percentile")
+    
     print(f"Average Instrumentalness (confidence there are no words) [0.0 - 1.0]: {round(attribute_avg['instrumentalness'],3)}")
+    print(f">> This is in the {attribute_percentile['instrumentalness']}th percentile")
+
     print(f"Average Liveness (confidence song was recorded in front of an audience) [0.0 - 1.0]: {round(attribute_avg['liveness'],3)}")
+    print(f">> This is in the {attribute_percentile['liveness']}th percentile")
+
     print(f"Average Loudness [-60db - 0db]: {round(attribute_avg['loudness'],3)}db")
+    print(f">> This is in the {attribute_percentile['loudness']}th percentile")
+
     print(f"Average Speechiness [0.0 - 1.0]: {round(attribute_avg['speechiness'],3)}")
+    print(f">> This is in the {attribute_percentile['speechiness']}th percentile")
+
     print(f"Average Valence (how cheerful the track is) [0.0 - 1.0]: {round(attribute_avg['valence'],3)}")
+    print(f">> This is in the {attribute_percentile['valence']}th percentile")
+
     print(f"Average Tempo (BPM): {round(attribute_avg['tempo'],3)}")
+    print(f">> This is in the {attribute_percentile['tempo']}th percentile")
+

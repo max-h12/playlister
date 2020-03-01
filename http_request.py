@@ -61,9 +61,4 @@ def get_song_features(songs, attribute_avg, token):
         #putting both avoids having to double loop
         for key in attribute_avg:
             songs[id][key] = data[key]
-
-            #TODO: generalize for all attr
-            if key == "duration_ms":
-                p = dist.get_percentile("duration_ms", data[key])
-                songs[id]["duration_ms_percentile"] = p
             attribute_avg[key] += ((data[key])/(len(songs)))
