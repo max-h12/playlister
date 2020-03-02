@@ -2,8 +2,10 @@
 ## Analyze Spotify songs/playlists.
 * Uses Python HTTP requests to Spotify API to gather data for songs and playlists.
 
-##### **TO RUN**: Download folder and run main.py
-
+##### **TO RUN**: 
+##### 1) Download folder 
+##### 2) create 'key.py' and set variables client_id and client_secret to respective keys (from spotify developer account)
+##### 3) run main.py
 
 Current Functionality
 * Take a public playlist URL, grabs all tracks, request interesting statistics
