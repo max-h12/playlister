@@ -11,8 +11,8 @@ Current Functionality
 * Reports most extreme songs in attribute categories (with percentiles)
 
 TODO
-* ~~Implement distributions to compute percentiles overall
-* ~~Calculate extreme songs and percentiles
+* ~~Implement distributions to compute percentiles overall~~
+* ~~Calculate extreme songs and percentiles~~
 * Implement a 'genre' guesser
 	* Gather data on main generes
 	* Compare found statistics to guess
