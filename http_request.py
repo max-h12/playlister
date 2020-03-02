@@ -3,7 +3,7 @@ import requests
 import re
 
 import key
-import feat_dist as dist
+import distributions as dist
 
 #get an auth key from spotify using client id
 def get_token():

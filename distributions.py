@@ -1,7 +1,11 @@
 #creates distributions of values corresponding to spotifys data
+#reports percentiles of values given these distributions
+
+import json
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
+from os import path
 
 #descriptions of distributions of said key
 #see more about these distributions at https://developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/
@@ -39,22 +43,27 @@ def get_percentile(name, num):
     return stats.percentileofscore(ALL_DIST[name],num)
 
 def init():
-    #create all the distributions
-    for descrip in FRACTION_DIST:
-        ALL_DIST[descrip] = create_distribution(FRACTION_DIST[descrip], 0, 0.05)
+    ALL_DIST = {}
 
-    #loudness and tempo are scaled differently, create seperately
-    ALL_DIST["loudness"] = create_distribution(LOUDNESS, -40, 2)
-    ALL_DIST["tempo"] = create_distribution(TEMPO, 0, 11)
+    #if no distribution file is found or file has been modified
+    if not path.exists("spotify_distributions.npy"):
+        #create all the distributions
+        for descrip in FRACTION_DIST:
+            ALL_DIST[descrip] = create_distribution(FRACTION_DIST[descrip], 0, 0.05)
 
-    #song length is normally distributed, approx described as below
-    ALL_DIST["duration_ms"] = np.random.normal(242000, scale=75000, size=10000)
+        #loudness and tempo are scaled differently, create seperately
+        ALL_DIST["loudness"] = create_distribution(LOUDNESS, -40, 2)
+        ALL_DIST["tempo"] = create_distribution(TEMPO, 0, 11)
 
-    '''
-    #If we want to look at the distribution of a particular attribute
-    graph = plt.hist(ALL_DIST["speechiness"], bins=20)
-    plt.show()
-    '''
+        #song length is normally distributed, approx described as below
+        ALL_DIST["duration_ms"] = np.random.normal(242000, scale=75000, size=10000)
+
+        np.save("spotify_distributions.npy", ALL_DIST)
+    else:
+        #if file found, load it
+        dist_file = np.load("spotify_distributions.npy", allow_pickle=True)
+        ALL_DIST = dist_file.item()
+
 
 def main():
     init()
