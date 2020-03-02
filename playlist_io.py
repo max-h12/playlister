@@ -18,8 +18,8 @@ def get_playlist_id():
     return playlist_id
 
 #formats the attribute averages and percentiles for display to user in terminal
-def format_oput(attribute_avg, attribute_percentile):
-
+def basic_oput(attribute_avg, attribute_percentile):
+    print("\nPlaylist Average Stats:\n")
     milli = attribute_avg['duration_ms']
     seconds = round(int((milli/1000)%60),2)
     minutes = round(int((milli/(1000*60))%60),2)
@@ -61,3 +61,73 @@ def format_oput(attribute_avg, attribute_percentile):
     print(f"Average Tempo (BPM): {round(attribute_avg['tempo'],3)}")
     print(f">> This is in the {attribute_percentile['tempo']}th percentile")
 
+    print("============================================================")
+
+def extreme_oput(high_songs, low_songs):
+    print("\nMost Extreme Individual Songs:\n")
+
+    print(f"The longest song was {high_songs['duration_ms'][0]}, in the {high_songs['duration_ms'][1]}th percentile!")
+    milli = high_songs['duration_ms'][2]
+    seconds = round(int((milli/1000)%60),2)
+    minutes = round(int((milli/(1000*60))%60),2)
+    print(f">> duration of {minutes}:{seconds}")
+
+    print(f"The shortest song was {low_songs['duration_ms'][0]}, in the {low_songs['duration_ms'][1]}th percentile!")
+    milli = low_songs['duration_ms'][2]
+    seconds = round(int((milli/1000)%60),2)
+    minutes = round(int((milli/(1000*60))%60),2)
+    print(f">> duration of {minutes}:{seconds}")
+
+    print(f"The most acoustic sounding song was {high_songs['acousticness'][0]}, in the {high_songs['acousticness'][1]}th percentile!")
+    print(f">> coefficient of {high_songs['acousticness'][2]}")
+
+    print(f"The least acoustic sounding song was {low_songs['acousticness'][0]}, in the {low_songs['acousticness'][1]}th percentile!")
+    print(f">> coefficient of {low_songs['acousticness'][2]}")
+
+    print(f"The most danceable song was {high_songs['danceability'][0]}, in the {high_songs['danceability'][1]}th percentile!")
+    print(f">> coefficient of {high_songs['danceability'][2]}")
+
+    print(f"The least danceable song was {low_songs['danceability'][0]}, in the {low_songs['danceability'][1]}th percentile!")
+    print(f">> coefficient of {low_songs['danceability'][2]}")
+
+    print(f"The most energetic song was {high_songs['energy'][0]}, in the {high_songs['energy'][1]}th percentile!")
+    print(f">> coefficient of {high_songs['energy'][2]}")
+
+    print(f"The least energetic song was {low_songs['energy'][0]}, in the {low_songs['energy'][1]}th percentile!")
+    print(f">> coefficient of {low_songs['energy'][2]}")
+
+    print(f"The most instrumental song was {high_songs['instrumentalness'][0]}, in the {high_songs['instrumentalness'][1]}th percentile!")
+    print(f">> coefficient of {high_songs['instrumentalness'][2]}")
+
+    print(f"The least instrumental song was {low_songs['instrumentalness'][0]}, in the {low_songs['instrumentalness'][1]}th percentile!")
+    print(f">> coefficient of {low_songs['instrumentalness'][2]}")
+
+    print(f"The most live song was {high_songs['liveness'][0]}, in the {high_songs['liveness'][1]}th percentile!")
+    print(f">> coefficient of {high_songs['liveness'][2]}")
+
+    print(f"The least live song was {low_songs['liveness'][0]}, in the {low_songs['liveness'][1]}th percentile!")
+    print(f">> coefficient of {low_songs['liveness'][2]}")
+
+    print(f"The loudest song was {high_songs['loudness'][0]}, in the {high_songs['loudness'][1]}th percentile!")
+    print(f">> {high_songs['loudness'][2]}db")
+
+    print(f"The quietest song was {low_songs['loudness'][0]}, in the {low_songs['loudness'][1]}th percentile!")
+    print(f">> {low_songs['loudness'][2]}db")
+
+    print(f"The wordiest song was {high_songs['speechiness'][0]}, in the {high_songs['speechiness'][1]}th percentile!")
+    print(f">> coefficient of {high_songs['speechiness'][2]}")
+
+    print(f"The least wordy song was {low_songs['speechiness'][0]}, in the {low_songs['speechiness'][1]}th percentile!")
+    print(f">> coefficient of {low_songs['speechiness'][2]}")
+
+    print(f"The happiest song was {high_songs['valence'][0]}, in the {high_songs['valence'][1]}th percentile!")
+    print(f">> coefficient of {high_songs['valence'][2]}")
+
+    print(f"The saddest song was {low_songs['valence'][0]}, in the {low_songs['valence'][1]}th percentile!")
+    print(f">> coefficient of {low_songs['valence'][2]}")
+
+    print(f"The fastests song was {high_songs['tempo'][0]}, in the {high_songs['tempo'][1]}th percentile!")
+    print(f">> {high_songs['tempo'][2]}BPM")
+
+    print(f"The slowest song was {low_songs['tempo'][0]}, in the {low_songs['tempo'][1]}th percentile!")
+    print(f">> {low_songs['tempo'][2]}BPM")

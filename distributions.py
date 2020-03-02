@@ -43,9 +43,7 @@ def get_percentile(name, num):
     return stats.percentileofscore(ALL_DIST[name],num)
 
 def init():
-    ALL_DIST = {}
-
-    #if no distribution file is found or file has been modified
+    #if no distribution file is found create one
     if not path.exists("spotify_distributions.npy"):
         #create all the distributions
         for descrip in FRACTION_DIST:
@@ -62,14 +60,10 @@ def init():
     else:
         #if file found, load it
         dist_file = np.load("spotify_distributions.npy", allow_pickle=True)
-        ALL_DIST = dist_file.item()
+        for item in dist_file.item():
+            ALL_DIST[item] = dist_file.item().get(item)
+        
 
-
-def main():
-    init()
-
-if __name__ == "__main__":
-    main()
 
 
 
