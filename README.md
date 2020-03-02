@@ -1,7 +1,9 @@
 # playlister
-Analyze Spotify songs/playlists.
+## Analyze Spotify songs/playlists.
+* Uses Python HTTP requests to Spotify API to gather data for songs and playlists.
 
-Uses Python HTTP requests to Spotify API to gather data for songs and playlists.
+##### **TO RUN**: Download folder and run main.py
+
 
 Current Functionality
 * Take a public playlist URL, grabs all tracks, request interesting statistics
