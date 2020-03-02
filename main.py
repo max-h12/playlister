@@ -32,11 +32,12 @@ def main():
     dist.init()
         
     #get authorization token and playlist id from input
-    playlist_id = io.get_playlist_id()
     token = request.get_token()
+    
+    playlist_id = io.get_playlist_id()
 
     #get the songs, then load in their features
-    request.get_album_tracks(songs, token, playlist_id)
+    request.get_playlist_tracks(songs, token, playlist_id)
     request.get_song_features(songs, attribute_avg, token)
 
     #get percentiles for playlist as a whole and for individual songs
