@@ -5,7 +5,7 @@ import re
 import key
 import distributions as dist
 
-#get an auth key from spotify using client id
+#get an auth key from spotify using client info
 def get_token():
     request_url = "https://accounts.spotify.com/api/token"
     params = {'grant_type':'client_credentials'}
@@ -14,8 +14,6 @@ def get_token():
     #auth token for all subsequent requests
     token = 'Bearer ' + r.json()['access_token']
     return token
-
-
 
 #gets all songs from playlist_id, using token as authentication, loading into the dict 'songs'
 def get_album_tracks(songs, token, playlist_id):

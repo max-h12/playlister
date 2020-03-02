@@ -63,6 +63,7 @@ def basic_oput(attribute_avg, attribute_percentile):
 
     print("============================================================")
 
+#formats the output for the highest/lowest percentiles in each category
 def extreme_oput(high_songs, low_songs):
     print("\nMost Extreme Individual Songs:\n")
 
