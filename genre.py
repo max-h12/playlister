@@ -1,7 +1,8 @@
+import json
 import http_request as request
+from os import path
 
-ALL_GENRES = ["classic rock"]
-GENRE_ATTRS = {}
+ALL_GENRES = ["classic rock","electronic","jazz","country","pop","rap","classical","folk"]
 
 #get the attribute averages for a particular genre of music
 #uses playlist_no to determine how many playlists to bring in
@@ -24,9 +25,23 @@ def get_genre_attr(genre, playlist_no, token):
     return genre_avg
 
 def init():
-    token = request.get_token()
-    for genre in ALL_GENRES:
-        GENRE_ATTRS[genre] = get_genre_attr(genre,5,token)
+    GENRE_ATTRS = {}
+
+    #if genre data has not been found, gather it
+    #this will take a long time (up to 30min)
+    if not path.exists("genre_data.json"):
+        token = request.get_token()
+        for genre in ALL_GENRES:
+            GENRE_ATTRS[genre] = get_genre_attr(genre,5,token)
+        with open('genre_data.json','w') as f:
+            json.dump(GENRE_ATTRS, f, indent=4)
+        f.close()
+    else:
+        with open('genre_data.json') as f:
+            data = json.load(f)
+            GENRE_ATTRS = data
+        f.close()
+
     print(GENRE_ATTRS)
 
 def main():

@@ -63,8 +63,11 @@ def get_song_features(songs, attribute_avg, token):
             #add each attribute into the map and add its partial average in
             #putting both avoids having to double loop
             for key in attribute_avg:
-                songs[song_id][key] = data[key]
-                attribute_avg[key] += ((data[key])/(len(songs)))
+                if key in data:
+                    songs[song_id][key] = data[key]
+                    attribute_avg[key] += ((data[key])/(len(songs)))
+                else:
+                    print(f"HTTP Response error, no key: {key}")
 
 #finds the top 10 playlists relating to the particular 'genere'
 def search_for_playlists(genre, limit, token):
