@@ -5,6 +5,7 @@ import re
 import playlist_io as io
 import http_request as request
 import distributions as dist
+import genre 
 
 def main():
     #map of all songs, key:song-id, value: dict of attributes
@@ -30,6 +31,7 @@ def main():
 
     #load or initialize all the distributions
     dist.init()
+    genre.init()
         
     #get authorization token and playlist id from input
     token = request.get_token()
@@ -44,9 +46,12 @@ def main():
     dist.get_overall_percentile(attribute_avg, attribute_percentile)
     dist.calculate_extreme_songs(songs, high_songs, low_songs)
 
+    sort = genre.find_best_match(attribute_percentile)
+
     #pretty print to terminal
     io.basic_oput(attribute_avg, attribute_percentile)
     io.extreme_oput(high_songs,low_songs)
+    print(f"1st guess: {sort[0][0]}\n2nd guess: {sort[1][0]}\n3rd guess: {sort[2][0]}")
 
 if __name__ == "__main__":
     main()

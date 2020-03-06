@@ -1,8 +1,27 @@
 import json
 import http_request as request
 from os import path
+import distributions as dist
 
+PLAYLIST_NO = 10
+NO_SCALE = ["duration_ms","tempo","loudness"]
+genre_attr = {}
+match_map = {"classic rock":0,"electronic":0,"jazz":0,"country":0,"pop":0,"rap":0,"classical":0,"folk":0}
 ALL_GENRES = ["classic rock","electronic","jazz","country","pop","rap","classical","folk"]
+
+#TODO: use percentiles not actual values
+def find_best_match(playlist_percentile):    
+    global genre_attr
+    genre_percentile = {}
+
+    for g in genre_attr:
+        dist.get_overall_percentile(genre_attr[g], genre_percentile)
+        for key in genre_percentile:
+            match_map[g] += (((genre_percentile[key]) - (playlist_percentile[key]))**2)
+
+    
+    sort = sorted(match_map.items(), key=lambda x: x[1])
+    return sort
 
 #get the attribute averages for a particular genre of music
 #uses playlist_no to determine how many playlists to bring in
@@ -25,27 +44,28 @@ def get_genre_attr(genre, playlist_no, token):
     return genre_avg
 
 def init():
-    GENRE_ATTRS = {}
+    global genre_attr
 
     #if genre data has not been found, gather it
     #this will take a long time (up to 30min)
-    if not path.exists("genre_data.json"):
+    if not path.exists(f"genre_data_{PLAYLIST_NO}.json"):
         token = request.get_token()
         for genre in ALL_GENRES:
-            GENRE_ATTRS[genre] = get_genre_attr(genre,5,token)
-        with open('genre_data.json','w') as f:
-            json.dump(GENRE_ATTRS, f, indent=4)
+            genre_attr[genre] = get_genre_attr(genre,PLAYLIST_NO,token)
+        with open(f"genre_data_{PLAYLIST_NO}.json",'w') as f:
+            json.dump(genre_attr, f, indent=4)
         f.close()
     else:
-        with open('genre_data.json') as f:
+        with open(f"genre_data_{PLAYLIST_NO}.json") as f:
             data = json.load(f)
-            GENRE_ATTRS = data
+            genre_attr = data
         f.close()
-
-    print(GENRE_ATTRS)
-
+    
 def main():
     init()
 
 if __name__ == "__main__":
     main()
+
+
+

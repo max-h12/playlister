@@ -1,6 +1,7 @@
 #sends all http requests to spotifys API
 import requests
 import re
+import time
 
 import key
 import distributions as dist
@@ -48,6 +49,7 @@ def get_playlist_tracks(songs, token, playlist_id):
 
 #gets all the features for each song in the songs map, adds in partial averages as well
 def get_song_features(songs, attribute_avg, token):
+
     #setup the request
     request_url = "https://api.spotify.com/v1/audio-features/"
     params = {'Authorization':token} 
@@ -60,6 +62,18 @@ def get_song_features(songs, attribute_avg, token):
         else:
             r = requests.get(url = request_url + song_id, headers = params) 
             data = r.json()
+
+            attempts = 0
+            while "error" in data and data["error"]["status"]==429:
+                print(f"Error: {data}, trying again in 5 seconds")
+                attempts+=1
+                if(attempts>25):
+                    print(f"Too many failed attempts, exiting")
+                    exit
+                time.sleep(5)
+                r = requests.get(url = request_url + song_id, headers = params) 
+                data = r.json()
+
             #add each attribute into the map and add its partial average in
             #putting both avoids having to double loop
             for key in attribute_avg:
@@ -67,7 +81,7 @@ def get_song_features(songs, attribute_avg, token):
                     songs[song_id][key] = data[key]
                     attribute_avg[key] += ((data[key])/(len(songs)))
                 else:
-                    print(f"HTTP Response error, no key: {key}")
+                    print(f"HTTP Response error, {data} has no key: {key}")
 
 #finds the top 10 playlists relating to the particular 'genere'
 def search_for_playlists(genre, limit, token):

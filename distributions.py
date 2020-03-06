@@ -49,7 +49,7 @@ def get_percentile(name, num):
 def get_overall_percentile(attribute_avg, attribute_percentile):
     for attr in attribute_avg:
         if attr not in NO_PERCENTILE:
-            attribute_percentile[attr] = round(get_percentile(attr,attribute_avg[attr]))
+            attribute_percentile[attr] = get_percentile(attr,attribute_avg[attr])
 
 #finds the most extreme song (percentile wise) for every attribute
 def calculate_extreme_songs(songs, high_songs, low_songs):
