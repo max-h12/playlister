@@ -3,7 +3,7 @@ import http_request as request
 from os import path
 import distributions as dist
 
-PLAYLIST_NO = 10
+PLAYLIST_NO = 2
 NO_SCALE = ["duration_ms","tempo","loudness"]
 genre_attr = {}
 match_map = {"classic rock":0,"electronic":0,"jazz":0,"country":0,"pop":0,"rap":0,"classical":0,"folk":0}
