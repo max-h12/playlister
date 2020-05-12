@@ -2,12 +2,12 @@
 import requests
 import re
 
-import playlist_io as io
-import http_request as request
-import distributions as dist
-import genre 
+from . import playlist_io as io
+from . import http_request as request
+from . import distributions as dist
+from . import genre 
 
-def main():
+def calculate(purl):
     #map of all songs, key:song-id, value: dict of attributes
     songs = {}
 
@@ -36,7 +36,9 @@ def main():
     #get authorization token and playlist id from input
     token = request.get_token()
     
-    playlist_id = io.get_playlist_id()
+    playlist_id = io.get_playlist_id(purl)
+    if(playlist_id == -1):
+        return playlist_id
 
     #get the songs, then load in their features
     request.get_playlist_tracks(songs, token, playlist_id)
@@ -49,10 +51,11 @@ def main():
     sort = genre.find_best_match(attribute_percentile)
 
     #pretty print to terminal
-    io.basic_oput(attribute_avg, attribute_percentile)
-    io.extreme_oput(high_songs,low_songs)
-    print(f"1st guess: {sort[0][0]}\n2nd guess: {sort[1][0]}\n3rd guess: {sort[2][0]}")
+    oput = io.basic_oput(attribute_avg, attribute_percentile)
+    oput.extend(io.extreme_oput(high_songs,low_songs))
+    oput.append(f"1st guess: {sort[0][0]}\n2nd guess: {sort[1][0]}\n3rd guess: {sort[2][0]}")
+    return oput
 
 if __name__ == "__main__":
-    main()
+    calculate()
 

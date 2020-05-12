@@ -3,8 +3,8 @@ import requests
 import re
 import time
 
-import key
-import distributions as dist
+from . import key
+from . import distributions as dist
 
 #get an auth key from spotify using client info
 def get_token():

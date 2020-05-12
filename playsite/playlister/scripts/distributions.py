@@ -66,8 +66,9 @@ def calculate_extreme_songs(songs, high_songs, low_songs):
 
 #loads distributions from a file or creates them if no file is found
 def init():
+    file_path = f"{path.dirname(path.realpath(__file__))}/spotify_distributions.npy"
     #if no distribution file is found create one
-    if not path.exists("spotify_distributions.npy"):
+    if not path.exists(file_path):
         #create all the distributions
         for descrip in FRACTION_DIST:
             ALL_DIST[descrip] = create_distribution(FRACTION_DIST[descrip], 0, 0.05)
@@ -82,7 +83,7 @@ def init():
         np.save("spotify_distributions.npy", ALL_DIST)
     else:
         #if file found, load it
-        dist_file = np.load("spotify_distributions.npy", allow_pickle=True)
+        dist_file = np.load(file_path, allow_pickle=True)
         for item in dist_file.item():
             ALL_DIST[item] = dist_file.item().get(item)
         

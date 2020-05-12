@@ -1,7 +1,7 @@
 import json
-import http_request as request
+from . import http_request as request
 from os import path
-import distributions as dist
+from . import distributions as dist
 
 PLAYLIST_NO = 2
 NO_SCALE = ["duration_ms","tempo","loudness"]
@@ -45,10 +45,11 @@ def get_genre_attr(genre, playlist_no, token):
 
 def init():
     global genre_attr
-
+    file_path = f"{path.dirname(path.realpath(__file__))}/genre_data_{PLAYLIST_NO}.json"
     #if genre data has not been found, gather it
     #this will take a long time (up to 30min)
-    if not path.exists(f"genre_data_{PLAYLIST_NO}.json"):
+    if not path.exists(file_path):
+        print("genre not found")
         token = request.get_token()
         for genre in ALL_GENRES:
             genre_attr[genre] = get_genre_attr(genre,PLAYLIST_NO,token)
@@ -56,7 +57,7 @@ def init():
             json.dump(genre_attr, f, indent=4)
         f.close()
     else:
-        with open(f"genre_data_{PLAYLIST_NO}.json") as f:
+        with open(file_path) as f:
             data = json.load(f)
             genre_attr = data
         f.close()
