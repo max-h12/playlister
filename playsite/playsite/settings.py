@@ -25,7 +25,10 @@ SECRET_KEY = '3k6n9o#vb@q25094(h6d&0t0_at!@z3%mgat2k%rpi-z#hmc1z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'sptfy-playlister.herokuapp.com',
+    '127.0.0.1',
+]
 
 
 # Application definition
@@ -37,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'scripts'
 ]
 
 MIDDLEWARE = [
