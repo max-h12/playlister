@@ -20,4 +20,5 @@ urlpatterns = [
     path('', include('playlister.urls')),
     path('playlister/', include('playlister.urls')),
     path('admin/', admin.site.urls),
+    path('react/', include('frontend.urls'))
 ]
