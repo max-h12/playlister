@@ -12,3 +12,6 @@ def findPlaylist(request):
     if(oput==-1):
         return index(request)
     return render(request, 'results.html', {'data':oput})
+
+def argon(request):
+    return render(request, 'argon.html')
