@@ -16,6 +16,19 @@ def get_token():
     token = 'Bearer ' + r.json()['access_token']
     return token
 
+#get the name and number of tracks in a playlist
+def get_title(token, playlist_id):
+    request_url = f"https://api.spotify.com/v1/playlists/{playlist_id}"
+    content = "application/json"
+    params = {'Accept':content, 'Content-Type':content, 'Authorization':token} 
+
+    r = requests.get(url = request_url, headers = params) 
+
+    #payload of the http response
+    data = r.json()
+    return data['name']
+
+
 #gets all songs from playlist_id, using token as authentication, loading into the dict 'songs'
 def get_playlist_tracks(songs, token, playlist_id):
 

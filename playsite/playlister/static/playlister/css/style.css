@@ -19,6 +19,33 @@ body {
     font-style: italic;
 }
 
+.results{
+    font-weight: 800;
+    font-size: 96px;
+    font-style: italic;
+}
+
+.album{
+    color:white;
+}
+
 .form-control{
     width: 70%;
+}
+
+@media screen and (max-width: 600px){
+    .landing-title{
+        font-size: 72px;
+    }
+}
+
+
+#results-table{
+    background-color: rgba(255,255,255,.33);
+    width: 50%;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 500;
+    font-size: 20px;
 }

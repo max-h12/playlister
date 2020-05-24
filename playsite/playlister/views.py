@@ -11,7 +11,7 @@ def findPlaylist(request):
     oput = m.calculate(url)
     if(oput==-1):
         return index(request)
-    return render(request, 'results.html', {'data':oput})
+    return render(request, 'results.html', {"data":oput})
 
 def argon(request):
     return render(request, 'argon.html')

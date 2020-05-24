@@ -7,6 +7,8 @@ from . import http_request as request
 from . import distributions as dist
 from . import genre 
 
+token = ""
+
 def calculate(purl):
     #map of all songs, key:song-id, value: dict of attributes
     songs = {}
@@ -51,10 +53,12 @@ def calculate(purl):
     sort = genre.find_best_match(attribute_percentile)
 
     #pretty print to terminal
-    oput = io.basic_oput(attribute_avg, attribute_percentile)
-    oput.extend(io.extreme_oput(high_songs,low_songs))
-    oput.append(f"1st guess: {sort[0][0]}\n2nd guess: {sort[1][0]}\n3rd guess: {sort[2][0]}")
+    oput = {}
+    oput = io.get_omap(oput, attribute_avg, attribute_percentile, high_songs,low_songs)
+    oput["name"] = request.get_title(token, playlist_id)
+    oput["genre"] = f"1st guess: {sort[0][0]}\n2nd guess: {sort[1][0]}\n3rd guess: {sort[2][0]}"
     return oput
+
 
 if __name__ == "__main__":
     calculate()

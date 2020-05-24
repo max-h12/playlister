@@ -1,11 +1,127 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    </head>
-    <body>
-        <h1>Results</h1>
-        {% for line in data %}
-            <li>{{line}}</li>
-        {% endfor %}
-    </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Playlister</title>
+
+  <!-- Icons -->
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'playlister/css/nucleo-icons.css' %}">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <!-- Argon CSS -->
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'playlister/css/argon-design-system.min.css' %}">
+
+  <style>
+    body{
+        font-family: 'Montserrat', sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Core -->
+  {% load static %}
+  <script src="{% static 'playlister/vendor/jquery.min.js' %}"></script>
+  {% load static %}
+  <script src="{% static 'playlister/vendor/jquery.transit.min.js' %}"></script>
+  {% load static %}
+  <script src="{% static 'playlister/vendor/popper.min.js' %}"></script>
+  {% load static %}
+  <script src="{% static 'playlister/vendor/bootstrap.min.js' %}"></script>
+
+  <!-- Argon JS -->
+  {% load static %}
+  <script src="{% static 'playlister/js/argon-design-system.js' %}"></script>
+
+  <!-- Custom Styling -->
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'playlister/css/style.css' %}"> 
+
+<h1><span class = "results">Results for </span><span class = "results album">"{{data.name}}"</span></h1>
+    {% block content %}
+      <div class= "col-lg-12 text-center">
+        <table class="table table-hover" id="results-table">
+          <thead>
+              <tr>
+                  <th scope="col">Attribute</th>
+                  <th scope="col">Average</th>
+                  <th scope="col">Average Percentile</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>Mode</td>
+                  <td>{{data.mode}}</td>
+                  <td></td>
+              </tr>
+              <tr>
+                  <td>Time Signature</td>
+                  <td>{{data.time_signature}}</td>
+                  <td></td>
+              </tr>
+              <tr>
+                  <td>Song Duration</td>
+                  <td>{{data.duration.val}}</td>
+                  <td>{{data.duration.per}}th percentile</td>
+              </tr>
+              <tr>
+                  <td>Danceability</td>
+                  <td>{{data.danceability.val}}</td>
+                  <td>{{data.danceability.per}}th percentile</td>
+              </tr>
+              <tr>
+                  <td>Acousticness</td>
+                  <td>{{data.acousticness.val}}</td>
+                  <td>{{data.acousticness.per}}th percentile</td>
+              </tr>
+              <tr>
+                  <td>Energy</td>
+                  <td>{{data.energy.val}}</td>
+                  <td>{{data.energy.per}}th percentile</td>
+              </tr>
+              <tr>
+                  <td>Instrumentalness</td>
+                  <td>{{data.instrumentalness.val}}</td>
+                  <td>{{data.instrumentalness.per}}th percentile</td>
+              </tr>
+              <tr>
+                  <td>Liveness</td>
+                  <td>{{data.liveness.val}}</td>
+                  <td>{{data.liveness.per}}th percentile</td>
+              </tr>
+              <tr>
+                  <td>Loudness</td>
+                  <td>{{data.loudness.val}}</td>
+                  <td>{{data.loudness.per}}th percentile</td>
+              </tr>
+              <tr>
+                  <td>Speechiness</td>
+                  <td>{{data.speechiness.val}}</td>
+                  <td>{{data.speechiness.per}}th percentile</td>
+              </tr>
+              <tr>
+                  <td>Valence</td>
+                  <td>{{data.valence.val}}</td>
+                  <td>{{data.valence.per}}th percentile</td>
+              </tr>
+              <tr>
+                  <td>Tempo</td>
+                  <td>{{data.tempo.val}}</td>
+                  <td>{{data.tempo.per}}th percentile</td>
+              </tr>
+
+          </tbody>
+      </table>
+      </div>
+    {% endblock %}
+
+  {% load static %}
+  <script src="{% static 'playlister/js/background.js' %}"></script>
+
+  </body>
 </html>
