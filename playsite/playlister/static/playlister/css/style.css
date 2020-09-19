@@ -25,6 +25,13 @@ body {
     font-style: italic;
 }
 
+.res-table-header{
+    font-weight: 600;
+    font-size: 56px;
+    font-style: italic;
+    
+}
+
 .album{
     color:white;
 }
@@ -41,11 +48,16 @@ body {
 
 
 #results-table{
-    background-color: rgba(255,255,255,.33);
+    background-color: rgba(0,0,0,.5)!important;
     width: 50%;
     color: white;
     margin-left: auto;
     margin-right: auto;
     font-weight: 500;
     font-size: 20px;
+}
+
+.table-hover tbody tr:hover {
+    color: white;
+    background-color: rgba(0,0,0,.35);
 }

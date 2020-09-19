@@ -53,11 +53,11 @@ def calculate(purl):
     sort = genre.find_best_match(attribute_percentile)
 
     #pretty print to terminal
-    oput = {}
-    oput = io.get_omap(oput, attribute_avg, attribute_percentile, high_songs,low_songs)
+    oput = io.basic_oput(attribute_avg, attribute_percentile)
+    songs = io.extreme_oput(high_songs, low_songs)
     oput["name"] = request.get_title(token, playlist_id)
     oput["genre"] = f"1st guess: {sort[0][0]}\n2nd guess: {sort[1][0]}\n3rd guess: {sort[2][0]}"
-    return oput
+    return {"std":oput, "songs":songs}
 
 
 if __name__ == "__main__":

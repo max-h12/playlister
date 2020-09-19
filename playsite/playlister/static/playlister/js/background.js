@@ -10,20 +10,20 @@ background.initializr = function (){
   $this.id = "background_css3";
   $this.style = {bubbles_color:"#fff",stroke_width:0, stroke_color :"black"};
   $this.bubbles_number = 30;
-  $this.speed = [1500,8000]; //milliseconds
+  $this.speed = [10000,20000]; //milliseconds
   $this.max_bubbles_height = $this.height;
-  $this.shape = false // 1 : circle | 2 : triangle | 3 : rect | false :random
+  $this.shape = 1; // 1 : circle | 2 : triangle | 3 : rect | false :random
   
   if($("#"+$this.id).lenght > 0){
     $("#"+$this.id).remove();
   }
-  $this.object = $("<div style='z-index:-1;margin:0;padding:0; overflow:hidden;position:absolute;bottom:0' id='"+$this.id+"'> </div>'").appendTo("body");
+  $this.object = $("<div style='z-index:-1;margin:0;padding:0; overflow:hidden;position:fixed;bottom:0' id='"+$this.id+"'> </div>'").appendTo("body");
   
-  $this.ww = $(window).width()
-  $this.wh = $(window).height()
+  $this.ww = $(document).width()
+  $this.wh = $(document).height()
   $this.width = $this.object.width($this.ww);
   $this.height = $this.object.height($this.wh);
-  
+
 
   $("body").prepend("<style>.shape_background {transform-origin:center; width:80px; height:80px; background: "+$this.style.bubbles_color+"; position: absolute}</style>");
   

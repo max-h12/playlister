@@ -57,7 +57,7 @@ def calculate_extreme_songs(songs, high_songs, low_songs):
     for song in songs:
         for attr in songs[song]:
             if attr not in NO_PERCENTILE:
-                percentile = round(get_percentile(attr, songs[song][attr]))
+                percentile = round(get_percentile(attr, songs[song][attr]),2)
                 #if the percentile is more extreme than anything encountered before, store it
                 if percentile > high_songs[attr][1]:
                    high_songs[attr] = [songs[song]["name"],percentile, songs[song][attr]]

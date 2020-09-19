@@ -18,7 +18,7 @@ def get_playlist_id(playlist_url):
 
 def get_omap(omap, attribute_avg, attribute_percentile, high_songs,low_songs):
     omap.update(basic_oput(attribute_avg, attribute_percentile))
-    #omap.update(extreme_oput(high_songs, low_songs))
+    omap.update(extreme_oput(high_songs, low_songs))
     return omap
 
 #formats the attribute averages and percentiles for display to user in terminal
@@ -31,8 +31,8 @@ def basic_oput(attribute_avg, attribute_percentile):
     minutes = round(int((milli/(1000*60))%60),2)
 
     omap["duration"] = {}
-    omap["duration"]["val"] = f"{minutes}:{seconds}"
-    omap["duration"]["per"] =  f"{round(attribute_percentile['duration_ms'])}"
+    omap["duration"]["val"] = "{:02d}:{:02d}".format(minutes, seconds)
+    omap["duration"]["per"] =  f"{round(attribute_percentile['duration_ms'], 2)}"
 
     est_pitch = round(attribute_avg['key'])
     if(PITCH_MAP.__contains__(est_pitch)):
@@ -45,39 +45,39 @@ def basic_oput(attribute_avg, attribute_percentile):
 
     omap["acousticness"] = {}
     omap["acousticness"]["val"] = f"{round(attribute_avg['acousticness'],3)}"
-    omap["acousticness"]["per"] = f"{round(attribute_percentile['acousticness'])}"
+    omap["acousticness"]["per"] = f"{round(attribute_percentile['acousticness'],2)}"
 
     omap["danceability"] = {}
     omap["danceability"]["val"] = f"{round(attribute_avg['danceability'],3)}"
-    omap["danceability"]["per"] = f"{round(attribute_percentile['danceability'])}"
+    omap["danceability"]["per"] = f"{round(attribute_percentile['danceability'],2)}"
 
     omap["energy"] = {}
     omap["energy"]["val"] = f"{round(attribute_avg['energy'],3)}"
-    omap["energy"]["per"] = f"{round(attribute_percentile['energy'])}"
+    omap["energy"]["per"] = f"{round(attribute_percentile['energy'],2)}"
 
     omap["instrumentalness"] = {}
     omap["instrumentalness"]["val"] = f"{round(attribute_avg['instrumentalness'],3)}"
-    omap["instrumentalness"]["per"] = f"{round(attribute_percentile['instrumentalness'])}"
+    omap["instrumentalness"]["per"] = f"{round(attribute_percentile['instrumentalness'],2)}"
 
     omap["liveness"] = {}
     omap["liveness"]["val"] = f"{round(attribute_avg['liveness'],3)}"
-    omap["liveness"]["per"] = f"{round(attribute_percentile['liveness'])}"
+    omap["liveness"]["per"] = f"{round(attribute_percentile['liveness'],2)}"
 
     omap["loudness"] = {}
     omap["loudness"]["val"] = f"{round(attribute_avg['loudness'],3)}"
-    omap["loudness"]["per"] = f"{round(attribute_percentile['loudness'])}"
+    omap["loudness"]["per"] = f"{round(attribute_percentile['loudness'],2)}"
 
     omap["speechiness"] = {}
     omap["speechiness"]["val"] = f"{round(attribute_avg['speechiness'],3)}"
-    omap["speechiness"]["per"] = f"{round(attribute_percentile['speechiness'])}"
+    omap["speechiness"]["per"] = f"{round(attribute_percentile['speechiness'],2)}"
 
     omap["valence"] = {}
     omap["valence"]["val"] = f"{round(attribute_avg['valence'],3)}"
-    omap["valence"]["per"] = f"{round(attribute_percentile['valence'])}"
+    omap["valence"]["per"] = f"{round(attribute_percentile['valence'],2)}"
 
     omap["tempo"] = {}
     omap["tempo"]["val"] = f"{round(attribute_avg['tempo'],3)}"
-    omap["tempo"]["per"] = f"{round(attribute_percentile['tempo'])}"
+    omap["tempo"]["per"] = f"{round(attribute_percentile['tempo'],2)}"
 
     return omap
 
@@ -92,7 +92,7 @@ def extreme_oput(high_songs, low_songs):
     omap["duration"]["high"] = {}
     omap["duration"]["high"]["song"] = f"{high_songs['duration_ms'][0]}"
     omap["duration"]["high"]["per"] = f"{high_songs['duration_ms'][1]}"
-    omap["duration"]["high"]["val"] = f"{minutes}:{seconds}"
+    omap["duration"]["high"]["val"] = "{:02d}:{:02d}".format(minutes, seconds)
 
     milli = low_songs['duration_ms'][2]
     seconds = round(int((milli/1000)%60),2)
@@ -100,7 +100,7 @@ def extreme_oput(high_songs, low_songs):
     omap["duration"]["low"] = {}
     omap["duration"]["low"]["song"] = f"{low_songs['duration_ms'][0]}"
     omap["duration"]["low"]["per"] = f"{low_songs['duration_ms'][1]}"
-    omap["duration"]["low"]["val"] = f"{minutes}:{seconds}"
+    omap["duration"]["low"]["val"] = "{:02d}:{:02d}".format(minutes, seconds)
 
     omap["acousticness"] = {}
     omap["acousticness"]["high"] = {}

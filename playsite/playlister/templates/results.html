@@ -42,9 +42,14 @@
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static 'playlister/css/style.css' %}"> 
 
-<h1><span class = "results">Results for </span><span class = "results album">"{{data.name}}"</span></h1>
+
+<!-- TODO: Restyle the table, expandable information, graphs, extreme songs -->
+<h1><span class = "results">Results for </span><span class = "results album">"{{data.std.name}}"</span></h1>
     {% block content %}
       <div class= "col-lg-12 text-center">
+        <h3 class = "res-table-header"><u>Playlist Averages</u></h3>
+        <h5>Click on an attribute to learn more.<h5>
+        <h6>Values pulled from Spotify API song database. Percentile calculations are extrapolated from Spotify song distribution data.</h6>
         <table class="table table-hover" id="results-table">
           <thead>
               <tr>
@@ -55,66 +60,188 @@
           </thead>
           <tbody>
               <tr>
-                  <td>Mode</td>
-                  <td>{{data.mode}}</td>
-                  <td></td>
+                  <td>
+                    <button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Mode indicates the modality (major or minor) of a track, the type of scale from which its melodic content is derived.">Mode</button>
+                  </td>
+                  <td>{{data.std.mode}}</td>
+                  <td> ------ </td>
               </tr>
               <tr>
-                  <td>Time Signature</td>
-                  <td>{{data.time_signature}}</td>
-                  <td></td>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Time signature (meter) is a notational convention to specify how many beats are in each bar (or measure).">Time Signature</button></td>
+                  <td>{{data.std.time_signature}}</td>
+                  <td> ------ </td>
               </tr>
               <tr>
-                  <td>Song Duration</td>
-                  <td>{{data.duration.val}}</td>
-                  <td>{{data.duration.per}}th percentile</td>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.">Tempo</button></td>
+                  <td>{{data.std.tempo.val}}</td>
+                  <td>{{data.std.tempo.per}}th</td>
               </tr>
               <tr>
-                  <td>Danceability</td>
-                  <td>{{data.danceability.val}}</td>
-                  <td>{{data.danceability.per}}th percentile</td>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Duration of the song in the form (minutes):(seconds)">Song Duration</button></td>
+                  <td>{{data.std.duration.val}}</td>
+                  <td>{{data.std.duration.per}}th</td>
               </tr>
               <tr>
-                  <td>Acousticness</td>
-                  <td>{{data.acousticness.val}}</td>
-                  <td>{{data.acousticness.per}}th percentile</td>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable.">Danceability</button></td>
+                  <td>{{data.std.danceability.val}}</td>
+                  <td>{{data.std.danceability.per}}th </td>
               </tr>
               <tr>
-                  <td>Energy</td>
-                  <td>{{data.energy.val}}</td>
-                  <td>{{data.energy.per}}th percentile</td>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).">Valence</button></td>
+                  <td>{{data.std.valence.val}}</td>
+                  <td>{{data.std.valence.per}}th</td>
               </tr>
               <tr>
-                  <td>Instrumentalness</td>
-                  <td>{{data.instrumentalness.val}}</td>
-                  <td>{{data.instrumentalness.per}}th percentile</td>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy.Perceptual features contributing to this attribute include dynamic range, perceived loudness, timbre, onset rate, and general entropy.">Energy</button></td>
+                  <td>{{data.std.energy.val}}</td>
+                  <td>{{data.std.energy.per}}th</td>
+              </tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="The overall loudness of a track in decibels (dB). Loudness values are averaged across the entire track. Values typical range between -60 and 0 db.">Loudness</button></td>
+                  <td>{{data.std.loudness.val}}</td>
+                  <td>{{data.std.loudness.per}}th</td>
               </tr>
               <tr>
-                  <td>Liveness</td>
-                  <td>{{data.liveness.val}}</td>
-                  <td>{{data.liveness.per}}th percentile</td>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Speechiness detects the presence of spoken words in a track. Values below 0.33 most likely represent music and other non-speech-like tracks.">Speechiness</button></td>
+                  <td>{{data.std.speechiness.val}}</td>
+                  <td>{{data.std.speechiness.per}}th</td>
               </tr>
               <tr>
-                  <td>Loudness</td>
-                  <td>{{data.loudness.val}}</td>
-                  <td>{{data.loudness.per}}th percentile</td>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Predicts whether a track contains no vocals. The closer the instrumentalness value is to 1.0, the greater likelihood the track contains no vocal content. ">Instrumentalness</button></td>
+                  <td>{{data.std.instrumentalness.val}}</td>
+                  <td>{{data.std.instrumentalness.per}}th</td>
               </tr>
               <tr>
-                  <td>Speechiness</td>
-                  <td>{{data.speechiness.val}}</td>
-                  <td>{{data.speechiness.per}}th percentile</td>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 1.0 represents high confidence the track is acoustic. ">Acousticness</button></td>
+                  <td>{{data.std.acousticness.val}}</td>
+                  <td>{{data.std.acousticness.per}}th</td>
               </tr>
               <tr>
-                  <td>Valence</td>
-                  <td>{{data.valence.val}}</td>
-                  <td>{{data.valence.per}}th percentile</td>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Detects the presence of an audience in the recording. Higher liveness values represent an increased probability that the track was performed live. ">Liveness</button></td>
+                  <td>{{data.std.liveness.val}}</td>
+                  <td>{{data.std.liveness.per}}th</td>
               </tr>
               <tr>
-                  <td>Tempo</td>
-                  <td>{{data.tempo.val}}</td>
-                  <td>{{data.tempo.per}}th percentile</td>
+          </tbody>
+      </table>
+      <h3 class = "res-table-header"><u>Most Extreme Songs</u></h3>
+      <table class="table table-hover" id="results-table">
+          <thead>
+              <tr>
+                  <th scope="col">Attribute</th>
+                  <th scope="col">Song</th>
+                  <th scope="col">Value</th>
+                  <th scope="col">Percentile</th>
               </tr>
-
+          </thead>
+          <tbody>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.">Tempo (Highest)</button></td>
+                  <td>{{data.songs.tempo.high.song}}</td>
+                  <td>{{data.songs.tempo.high.val}}</td>
+                  <td>{{data.songs.tempo.high.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.">Tempo (Lowest)</button></td>
+                  <td>{{data.songs.tempo.low.song}}</td>
+                  <td>{{data.songs.tempo.low.val}}</td>
+                  <td>{{data.songs.tempo.low.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Duration of the song in the form (minutes):(seconds)">Song Duration (Longest)</button></td>
+                  <td>{{data.songs.duration.high.song}}</td>
+                  <td>{{data.songs.duration.high.val}}</td>
+                  <td>{{data.songs.duration.high.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Duration of the song in the form (minutes):(seconds)">Song Duration (Shortest)</button></td>
+                  <td>{{data.songs.duration.low.song}}</td>
+                  <td>{{data.songs.duration.low.val}}</td>
+                  <td>{{data.songs.duration.low.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable.">Danceability (Highest)</button></td>
+                  <td>{{data.songs.danceability.high.song}}</td>
+                  <td>{{data.songs.danceability.high.val}}</td>
+                  <td>{{data.songs.danceability.high.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable.">Danceability (Lowest)</button></td>
+                  <td>{{data.songs.danceability.low.song}}</td>
+                  <td>{{data.songs.danceability.low.val}}</td>
+                  <td>{{data.songs.danceability.low.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).">Valence (Highest)</button></td>
+                  <td>{{data.songs.valence.high.song}}</td>
+                  <td>{{data.songs.valence.high.val}}</td>
+                  <td>{{data.songs.valence.high.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).">Valence (Lowest)</button></td>
+                  <td>{{data.songs.valence.low.song}}</td>
+                  <td>{{data.songs.valence.low.val}}</td>
+                  <td>{{data.songs.valence.low.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy.Perceptual features contributing to this attribute include dynamic range, perceived loudness, timbre, onset rate, and general entropy.">Energy (Highest)</button></td>
+                  <td>{{data.songs.energy.high.song}}</td>
+                  <td>{{data.songs.energy.high.val}}</td>
+                  <td>{{data.songs.energy.high.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy.Perceptual features contributing to this attribute include dynamic range, perceived loudness, timbre, onset rate, and general entropy.">Energy (Lowest)</button></td>
+                  <td>{{data.songs.energy.low.song}}</td>
+                  <td>{{data.songs.energy.low.val}}</td>
+                  <td>{{data.songs.energy.low.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Speechiness detects the presence of spoken words in a track. Values below 0.33 most likely represent music and other non-speech-like tracks.">Speechiness (Highest)</button></td>
+                  <td>{{data.songs.speechiness.high.song}}</td>
+                  <td>{{data.songs.speechiness.high.val}}</td>
+                  <td>{{data.songs.speechiness.high.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Speechiness detects the presence of spoken words in a track. Values below 0.33 most likely represent music and other non-speech-like tracks.">Speechiness (Lowest)</button></td>
+                  <td>{{data.songs.speechiness.low.song}}</td>
+                  <td>{{data.songs.speechiness.low.val}}</td>
+                  <td>{{data.songs.speechiness.low.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Predicts whether a track contains no vocals. The closer the instrumentalness value is to 1.0, the greater likelihood the track contains no vocal content. ">Instrumentalness (Highest)</button></td>
+                  <td>{{data.songs.instrumentalness.high.song}}</td>
+                  <td>{{data.songs.instrumentalness.high.val}}</td>
+                  <td>{{data.songs.instrumentalness.high.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Predicts whether a track contains no vocals. The closer the instrumentalness value is to 1.0, the greater likelihood the track contains no vocal content. ">Instrumentalness (Lowest)</button></td>
+                  <td>{{data.songs.instrumentalness.low.song}}</td>
+                  <td>{{data.songs.instrumentalness.low.val}}</td>
+                  <td>{{data.songs.instrumentalness.low.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 1.0 represents high confidence the track is acoustic. ">Acousticness (Highest)</button></td>
+                  <td>{{data.songs.acousticness.high.song}}</td>
+                  <td>{{data.songs.acousticness.high.val}}</td>
+                  <td>{{data.songs.acousticness.high.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 1.0 represents high confidence the track is acoustic. ">Acousticness (Lowest)</button></td>
+                  <td>{{data.songs.acousticness.low.song}}</td>
+                  <td>{{data.songs.acousticness.low.val}}</td>
+                  <td>{{data.songs.acousticness.low.per}}th</td>
+              </tr>
+                            <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Detects the presence of an audience in the recording. Higher liveness values represent an increased probability that the track was performed live. ">Liveness (Highest)</button></td>
+                  <td>{{data.songs.liveness.high.song}}</td>
+                  <td>{{data.songs.liveness.high.val}}</td>
+                  <td>{{data.songs.liveness.high.per}}th</td>
+              </tr>
+              <tr>
+                  <td><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Detects the presence of an audience in the recording. Higher liveness values represent an increased probability that the track was performed live. ">Liveness (Lowest)</button></td>
+                  <td>{{data.songs.liveness.low.song}}</td>
+                  <td>{{data.songs.liveness.low.val}}</td>
+                  <td>{{data.songs.liveness.low.per}}th</td>
+              </tr>
           </tbody>
       </table>
       </div>
